@@ -1,190 +1,229 @@
-# TermClicks.js
+# Consents Integration Guide
 
-A powerful and customizable JavaScript library to manage user consent for online agreements, including terms of service and privacy policies. Designed for flexibility, compliance, and ease of use.
+This guide covers the integration of Consents consent management system with your website or application. The integration uses termclicks.js to provide a customizable modal interface for collecting and managing user consents.
 
----
+## Installation
 
-## Features
+Add the CSS file in your HTML head:
 
-- **Customizable Options**: Configure user consent behavior to suit your needs.
-- **Auto-Update Support**: Automatically check for and handle updated agreements.
-- **Multiple Consent Modes**: Supports manual consent, auto-accept, and checkbox integration.
-- **User and Customer Tracking**: Easily track consent by users and customers with custom fields.
-- **Seamless Integration**: Embed consent modals and workflows directly into your app.
-
----
-
-## Table of Contents
-
-1. [Getting Started](#getting-started)
-2. [Implementation](#implementation)
-3. [Consent Modes](#consent-modes)
-4. [Configuration Options](#configuration-options)
-5. [Examples](#examples)
-6. [License](#license)
-
----
-
-## Getting Started
-
-### Installation
-
-Include the `termclicks.js` file in your project:
 ```html
-<script src="https://consentsapp.com/termclicks.js"></script>
-```
-
-### Initialization
-
-Define your configuration options and initialize the `TermClicks` object:
-```javascript
-var consentOptions = {
-    accountId: "123456",
-    agreementTypeIds: [1, 2],
-    checkboxEl: "consentCheckbox",
-    disableEls: ["submitButton"],
-    forceAgreementView: true,
-};
-var termClicksInstance = new TermClicks(consentOptions);
-```
-
----
-
-## Implementation
-
-### Manual Consent
-Manually present modals to users for consent:
-```javascript
-termClicksInstance.show(agreementTypeId).then((result) => {
-    if (result) {
-        console.log("User manually accepted the agreement.");
-    }
-});
-```
-
-### Auto-Accept
-Automatically accept all agreements programmatically:
-```javascript
-termClicksInstance.autoAccept().then(() => {
-    console.log("All agreements were automatically accepted.");
-});
-```
-
-### Checkbox Integration
-Tie consent to a checkbox in your form:
-```javascript
-var consentOptions = {
-    checkboxEl: "consentCheckbox",
-    disableEls: ["submitButton"],
-    forceAgreementView: true,
-};
-var termClicksInstance = new TermClicks(consentOptions);
-```
-
----
-
-## Consent Modes
-
-| **Mode**             | **Description**                                                                             | **Best Use Case**                                    |
-|-----------------------|---------------------------------------------------------------------------------------------|-----------------------------------------------------|
-| **Manual Consent**    | Presents modal for explicit user review and acknowledgment.                                | For legal or compliance-sensitive workflows.        |
-| **Auto-Accept**       | Automatically accepts agreements without user interaction.                                 | Internal systems or testing environments.           |
-| **Checkbox Integration** | Links user consent to a form checkbox, enabling further actions only after consent.       | Traditional form-based consent workflows.           |
-
----
-
-## Configuration Options
-
-Here is a complete list of available configuration options:
-
-### Basic Configuration
-| **Option**           | **Type**      | **Description**                                                                 | **Default** |
-|-----------------------|---------------|---------------------------------------------------------------------------------|-------------|
-| `accountId`          | `string`     | Unique identifier for your account.                                            | `""`        |
-| `agreementTypeIds`   | `Array<int>` | List of agreement IDs to track.                                                | `[]`        |
-| `checkboxEl`         | `string`     | ID of the checkbox element used for consent.                                   | `""`        |
-| `disableEls`         | `Array<string>` | List of element IDs to disable until consent is given.                         | `[]`        |
-
-### Behavioral Controls
-| **Option**             | **Type**      | **Description**                                                                | **Default** |
-|-------------------------|---------------|--------------------------------------------------------------------------------|-------------|
-| `forceAgreementView`   | `boolean`    | Requires users to view agreements before consenting.                          | `false`     |
-| `forceScroll`          | `boolean`    | Requires users to scroll through the agreement content before accepting.      | `false`     |
-| `disableScreen`        | `boolean`    | Disables interaction with other elements while the modal is displayed.        | `true`      |
-
-### User Information
-| **Option**             | **Type**      | **Description**                                                                | **Default** |
-|-------------------------|---------------|--------------------------------------------------------------------------------|-------------|
-| `userId`               | `string`     | User's unique ID.                                                             | `""`        |
-| `userNameEl`           | `string`     | ID of the element containing the user's name.                                 | `""`        |
-
-### Auto-Update
-| **Option**                   | **Type**      | **Description**                                                                | **Default** |
-|-------------------------------|---------------|--------------------------------------------------------------------------------|-------------|
-| `autoUpdate.checkOutdated`   | `boolean`    | Checks for outdated agreements and prompts for re-consent.                    | `false`     |
-
-### Default Text
-| **Option**                     | **Type**      | **Description**                                                                | **Default** |
-|---------------------------------|---------------|--------------------------------------------------------------------------------|-------------|
-| `defaultText.buttonAccept`      | `string`     | Text for the "Accept" button.                                                 | `"Accept"`  |
-| `defaultText.alertAgreementUpdated` | `string` | Message shown when agreements are updated.                                    | `"We’ve upgraded our terms. Please review."` |
-
----
-
-## Examples
-
-### Full Integration Example
-```html
-<!DOCTYPE html>
-<html lang="en">
 <head>
-    <title>TermClicks Demo</title>
-    <script src="https://consentsapp.com/termclicks.js"></script>
+    <link rel="stylesheet" href="https://consentsapp.com/termclicks.css">
 </head>
-<body>
-    <form id="signupForm">
-        <label>
-            <input type="checkbox" id="consentCheckbox">
-            I agree to the terms
-        </label>
-        <a href="#" id="termsLink">View Terms</a>
-        <a href="#" id="privacyLink">View Privacy Policy</a>
-        <button id="submitButton" disabled>Submit</button>
-    </form>
+```
 
+Add the JavaScript file at the bottom of your page, just before the closing body tag to ensure all content is loaded first:
+
+```html
+<body>
+    <!-- Your page content -->
+    
+    <script src="https://consentsapp.com/termclicks.js"></script>
     <script>
-        var consentOptions = {
-            accountId: "123456",
-            agreementTypeIds: [1, 2],
-            checkboxEl: "consentCheckbox",
-            disableEls: ["submitButton"],
-            forceAgreementView: true,
-            agreementLinks: [
-                { el: "termsLink", ag: 1 },
-                { el: "privacyLink", ag: 2 }
-            ],
-        };
-        var termClicksInstance = new TermClicks(consentOptions);
+        // Your Consents initialization
     </script>
 </body>
-</html>
 ```
 
----
+## Basic Setup
 
-## License
+Initialize with your configuration:
 
-This project is licensed under the MIT License. See the `LICENSE` file for details.
+```javascript
+const consentOptions = {
+    accountId: "YOUR_CONSENTS_ID",
+    agreementTypeIds: ["terms-1", "privacy-1"], // Agreement type IDs as strings
+    checkboxEl: "consent-checkbox"
+};
 
----
+const termClicks = new TermClicks(consentOptions);
+```
 
-## Contributing
+## Required Configuration
 
-We welcome contributions! If you'd like to improve this project, submit a pull request or open an issue.
+| Option | Type | Description |
+|--------|------|-------------|
+| `accountId` | string | Your Consents account identifier |
+| `agreementTypeIds` | string[] | Array of agreement type IDs from your Consents dashboard |
+| `checkboxEl` | string | ID of consent checkbox element |
 
----
+## User & Customer Identification
+
+All user identification fields are optional. However, Consents needs either a userId or an email address to track consents.
+
+### User Identification
+
+If neither `userId` nor `userEmail` is provided (or `userEmailEl` isn't bound to an existing element), Consents will automatically display an email collection field in the consent modal.
+
+```javascript
+{
+    // All fields are optional
+    userId: "user-123",            // Unique identifier for the user
+    userName: "John Doe",          // User's name
+    userEmail: "john@example.com", // User's email address
+    
+    // OR use element IDs to pull values from your form
+    userNameEl: "name-input-id",   // ID of element containing user's name
+    userEmailEl: "email-input-id", // ID of element containing user's email
+    
+    // Optional additional data
+    userCustomFields: "any-custom-data"
+}
+```
+
+### Customer Identification
+
+All customer fields are optional:
+
+```javascript
+{
+    customerId: "customer-123",      // Customer identifier
+    customerName: "Acme Corp",       // Customer name
+    customerNameEl: "company-input", // ID of element containing customer name
+    customerCustomFields: "any-custom-data"
+}
+```
+
+## Important Implementation Notes
+
+- You cannot use both direct values and element IDs for the same field (e.g., `userName` and `userNameEl` cannot be used together)
+- If no user identification is provided, the modal will include an email input field with built-in validation
+- When email collection is enabled in the modal, reCAPTCHA v3 is automatically integrated
+
+## Configuration Options Reference
+
+The absolute minimum configuration required is `accountId` and `agreementTypeIds`. All other options are optional and provide additional functionality and customization.
+
+Note: All element selectors (`checkboxEl`, `userNameEl`, etc.) support any valid CSS selector, not just IDs. For example:
+- IDs: `"#myCheckbox"`
+- Classes: `".consent-checkbox"`
+- Complex selectors: `"form.signup input[type='checkbox']"`
+
+| Option | Type | Description | Default | Category |
+|--------|------|-------------|----------|-----------|
+| `accountId` | string | Your Consents account identifier | `""` | Core |
+| `agreementTypeIds` | string[] | Array of agreement type IDs | `[]` | Core |
+| `checkboxEl` | string | Selector for consent checkbox element | `""` | Element Selector |
+| `userNameEl` | string | Selector for element containing user name | `""` | Element Selector |
+| `userEmailEl` | string | Selector for element containing user email | `""` | Element Selector |
+| `customerNameEl` | string | Selector for element containing customer name | `""` | Element Selector |
+| `disableEls` | string[] | Selectors for elements to disable until consent given | `[]` | Element Selector |
+| `userId` | string | Unique identifier for user | `""` | User Info |
+| `userName` | string | User's name | `""` | User Info |
+| `userEmail` | string | User's email address | `""` | User Info |
+| `userCustomFields` | string | Additional user data | `""` | User Info |
+| `customerId` | string | Customer identifier | `""` | Customer Info |
+| `customerName` | string | Customer name | `""` | Customer Info |
+| `customerCustomFields` | string | Additional customer data | `""` | Customer Info |
+| `forceAgreementView` | boolean | Require viewing agreement before consent | `false` | Behavior |
+| `forceScroll` | boolean | Require scrolling through content | `false` | Behavior |
+| `requireConfirmation` | boolean | Require explicit confirmation | `false` | Behavior |
+| `noSendConfirmation` | boolean | Skip sending confirmation | `false` | Behavior |
+| `disableScreen` | boolean | Disable background while modal is open | `true` | Behavior |
+| `autoUpdate.checkOutdated` | boolean | Check for updated agreements | `false` | Auto-Update |
+| `autoUpdate.requireUpdatedConsent` | boolean | Force new consent for updates | `false` | Auto-Update |
+| `autoUpdate.skipWarningDialog` | boolean | Skip update warning | `false` | Auto-Update |
+| `defaultText.buttonAccept` | string | Accept button text | `"Accept"` | Text Customization |
+| `defaultText.buttonDecline` | string | Decline button text | `"Decline"` | Text Customization |
+| `defaultText.buttonOk` | string | OK button text | `"OK"` | Text Customization |
+| `defaultText.buttonClose` | string | Close button text | `"Close"` | Text Customization |
+| `defaultText.buttonContinue` | string | Continue button text | `"Continue"` | Text Customization |
+| `defaultText.buttonDelay` | string | Delay button text | `"Delay"` | Text Customization |
+| `defaultText.tooltipText` | string | Consent check tooltip | `"Checking consent..."` | Text Customization |
+| `defaultText.alertTitleAlreadyAccepted` | string | Already accepted alert | `"Already Accepted"` | Text Customization |
+| `defaultText.alertAgreementUpdatedTitle` | string | Update alert title | `"Agreement Updated"` | Text Customization |
+| `defaultText.alertAgreementUpdated` | string | Update alert message | `"We have upgraded our terms and conditions. Please review and accept the new terms to continue."` | Text Customization |
+| `defaultText.invalidEmailError` | string | Email validation error | `"Invalid email address"` | Text Customization |
+| `defaultText.emailLabel` | string | Email input label | `"E-mail Required:"` | Text Customization |
+| `defaultText.emailPlaceholder` | string | Email input placeholder | `"Enter your email"` | Text Customization |
+
+## Common Implementation Scenarios
+
+[Coming Soon - Documentation of common implementation patterns and use cases]
+
+## CSS Customization
+
+### Modal Structure
+
+The modal interface uses the following class hierarchy:
+
+```css
+#termClicks-modal              /* Modal overlay */
+└── .termClicks-card          /* Modal container */
+    ├── .termClicks-card-header
+    │   ├── h5                /* Title */
+    │   └── .termClicks-closeButton
+    ├── .termClicks-card-body
+    │   └── #termClicks-scrollableContent
+    └── .termClicks-card-footer
+        ├── .termClicks-email-container   /* When email collection is enabled */
+        ├── .termClicks-acceptButton
+        ├── .termClicks-declineButton
+        └── .termClicks-closeButton
+```
+
+### Customizing Styles
+
+1. Add your custom CSS file after the default styles:
+
+```html
+<head>
+    <link rel="stylesheet" href="https://consentsapp.com/termclicks.css">
+    <link rel="stylesheet" href="your-custom-termclicks.css">
+</head>
+```
+
+2. Override the default styles in your CSS file:
+
+```css
+/* Custom modal background */
+#termClicks-modal {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+/* Custom modal size */
+.termClicks-card {
+    width: 600px;
+    height: 80vh;
+}
+
+/* Custom button styles */
+.termClicks-acceptButton {
+    background-color: #4CAF50;
+    border-radius: 8px;
+    padding: 12px 24px;
+}
+
+/* Custom header */
+.termClicks-card-header {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+}
+```
+
+### Default Responsive Breakpoints
+
+```css
+/* Default (mobile) */
+.termClicks-card {
+    width: 90%;
+}
+
+/* Medium screens (768px+) */
+@media (min-width: 768px) {
+    .termClicks-card {
+        width: 700px;
+    }
+}
+
+/* Large screens (1200px+) */
+@media (min-width: 1200px) {
+    .termClicks-card {
+        width: 750px;
+    }
+}
+```
 
 ## Support
 
-For questions, issues, or feature requests, feel free to contact us or open an issue in the repository.
-```
+For implementation support or questions about your Consents account, please contact support@consents.com.
