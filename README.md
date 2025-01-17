@@ -8,7 +8,7 @@ Add the CSS file in your HTML head:
 
 ```
 <head>
-    <link rel="stylesheet" href="https://consentsapp.com/termclicks.css">
+    <link rel="stylesheet" href="https://cdn.consentsapp.com/termclicks.css">
 </head>
 ```
 
@@ -18,7 +18,7 @@ Add the JavaScript file at the bottom of your page, just before the closing body
 <body>
     <!-- Your page content -->
     
-    <script src="https://consentsapp.com/termclicks.js"></script>
+    <script src="https://cdn.consentsapp.com/termclicks.js"></script>
     <script>
         // Your Consents initialization
     </script>
@@ -167,7 +167,7 @@ const termClicks = new TermClicks({
 
 ### 2\. New User Registration or Shopping Cart Checkout
 
-This scenario captures consent during registration or checkout. The "I agree" checkbox is typically near the final action button.
+This scenario captures consent during registration or checkout. The "I agree" checkbox is typically near the final action button.  Since this consent is coming in unsolicited, it also requires them to confirm the request via e-mail.
 
 When you already have the userId during registration:
 
@@ -175,8 +175,6 @@ When you already have the userId during registration:
 <form id="checkout-form">
     <input type="email" id="user-email" required>
     <input type="checkbox" id="consent-checkbox">
-    <label for="consent-checkbox">I agree to the terms</label>
-    <button id="checkout-btn" type="submit">Submit</button>
 </form>
 
 <script>
@@ -184,6 +182,7 @@ const termClicks = new TermClicks({
     accountId: "YOUR_CONSENTS_ID",
     agreementTypeIds: ["terms-1", "privacy-1"],
     forceAgreementView: true,
+    requireConfirmation: true,
     checkboxEl: "#consent-checkbox",
     disableEls: ["#checkout-btn"],
     userId: "user_123", // Your system's user ID
@@ -211,6 +210,7 @@ const termClicks = new TermClicks({
     accountId: "YOUR_CONSENTS_ID",
     agreementTypeIds: ["terms-1"],
     userId: "newly_created_user_123",
+    customerId: "newly_created_customer_123",
     userEmail: "user@example.com",
     autoUpdate: {
         userId: true
@@ -319,7 +319,7 @@ The modal interface uses the following class hierarchy:
 
 ```
 <head>
-    <link rel="stylesheet" href="https://consentsapp.com/termclicks.css">
+    <link rel="stylesheet" href="https://cdn.consentsapp.com/termclicks.css">
     <link rel="stylesheet" href="your-custom-termclicks.css">
 </head>
 ```
