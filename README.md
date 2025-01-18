@@ -210,13 +210,32 @@ const termClicks = new TermClicks({
     accountId: "YOUR_CONSENTS_ID",
     agreementTypeIds: ["terms-1"],
     userId: "newly_created_user_123",
+    userName: "John Doe",
+    userCustomFields: "{'property':'address'}",
     customerId: "newly_created_customer_123",
+    customerName: "Acme Holdings",
+    customerCustomFields: "{'phone':'555-555-5555'}",
     userEmail: "user@example.com",
     autoUpdate: {
         userId: true
     }
 });
 ```
+
+### \> \#\#\#\# Creating Anonymous Users and Customers Records
+
+\>  
+\> Most registration flows collect user and customer information before you have generated your internal uniqueId.  In cases like this, refer to the above example and simply send the user’s e-mail address.    Some additional things to consider:  
+\>  
+\> \- If you do not have a userId at this time you can **not** send company information.  The following options should not be set if userId is not provided:  
+\>   \- customerName  
+\>   \- customerNameEl  
+\>   \- customerId  
+\>  \-  customerCustomFields  
+\>  
+\> \- Once the consent record is provided with just the user’s e-mail, you can update the remaining user and customer fields by setting the autoUpdate.userId to **true** (see above example)  
+\> \- You should only set the autoUpdate.userId to **true** when a user’s information has changed.  Otherwise Consents will attempt to update the custom record on every page load from within your application or website.  
+\> \- autoUpdate.userId:true **only works** when the user hasn’t already been assigned a userId.  Any updates requested as a result of this option being set will only occur if Consents finds a user with the specified e-mail address who has **not** previously been assigned a userId.
 
 ### 3\. Multiple Agreement Consent
 
