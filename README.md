@@ -167,7 +167,7 @@ const termClicks = new TermClicks({
 
 ### 2\. New User Registration or Shopping Cart Checkout
 
-This scenario captures consent during registration or checkout. The "I agree" checkbox is typically near the final action button.  Since this consent is coming in unsolicited, it also requires them to confirm the request via e-mail.
+This scenario captures consent during registration or checkout. The "I agree" checkbox is typically near the final action button.  Since this consent is coming in unsolicited, we will require them to confirm the request via e-mail.
 
 When you already have the userId during registration:
 
