@@ -86,11 +86,11 @@ All customer fields are optional:
 }
 ```
 
-## Important Implementation Notes
-
-- You cannot use both direct values and element selectors for the same field (e.g., `userName` and `userNameEl` cannot be used together)  
-- If no user identification is provided, the modal will include an email input field with built-in validation  
-- When email collection is enabled in the modal, reCAPTCHA v3 is automatically integrated
+> ### Important Implementation Notes
+>
+> - You cannot use both direct values and element selectors for the same field (e.g., `userName` and `userNameEl` cannot be used together)  
+> - If no user identification is provided, the modal will include an email input field with built-in validation  
+> - When email collection is enabled in the modal, reCAPTCHA v3 is automatically integrated
 
 ## Configuration Options Reference
 
@@ -167,7 +167,7 @@ const termClicks = new TermClicks({
 
 ### 2\. New User Registration or Shopping Cart Checkout
 
-This scenario captures consent during registration or checkout. The "I agree" checkbox is typically near the final action button.  Since this consent is coming in unsolicited, it also requires them to confirm the request via e-mail.
+This scenario captures consent during registration or checkout. The "I agree" checkbox is typically near the final action button.  Since this consent is coming in unsolicited, we will require them to confirm the request via e-mail.
 
 When you already have the userId during registration:
 
@@ -222,20 +222,19 @@ const termClicks = new TermClicks({
 });
 ```
 
-### \> \#\#\#\# Creating Anonymous Users and Customers Records
-
-\>  
-\> Most registration flows collect user and customer information before you have generated your internal uniqueId.  In cases like this, refer to the above example and simply send the user’s e-mail address.    Some additional things to consider:  
-\>  
-\> \- If you do not have a userId at this time you can **not** send company information.  The following options should not be set if userId is not provided:  
-\>   \- customerName  
-\>   \- customerNameEl  
-\>   \- customerId  
-\>  \-  customerCustomFields  
-\>  
-\> \- Once the consent record is provided with just the user’s e-mail, you can update the remaining user and customer fields by setting the autoUpdate.userId to **true** (see above example)  
-\> \- You should only set the autoUpdate.userId to **true** when a user’s information has changed.  Otherwise Consents will attempt to update the custom record on every page load from within your application or website.  
-\> \- autoUpdate.userId:true **only works** when the user hasn’t already been assigned a userId.  Any updates requested as a result of this option being set will only occur if Consents finds a user with the specified e-mail address who has **not** previously been assigned a userId.
+> #### Creating Anonymous Users and Customers Records
+>  
+> Most registration flows collect user and customer information before you have generated your internal uniqueId.  In cases like this, refer to the above example and simply send the user’s e-mail address.    Some additional things to consider:  
+>  
+> - If you do not have a userId at this time you can **not** send company information.  The following options should not be set if userId is not provided:  
+>   - customerName  
+>   - customerNameEl  
+>   - customerId  
+>   - customerCustomFields  
+>  
+> - Once the consent record is provided with just the user’s e-mail, you can update the remaining user and customer fields by setting the autoUpdate.userId to **true** (see above example)  
+> - You should only set the autoUpdate.userId to **true** when a user’s information has changed.  Otherwise Consents will attempt to update the custom record on every page load from within your application or website.  
+> - autoUpdate.userId:true **only works** when the user hasn’t already been assigned a userId.  Any updates requested as a result of this option being set will only occur if Consents finds a user with the specified e-mail address who has **not** previously been assigned a userId.
 
 ### 3\. Multiple Agreement Consent
 
